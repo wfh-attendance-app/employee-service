@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/wfh-attendance-app/employee-service#readme",
   "dependencies": {
+    "@google-cloud/storage": "^7.15.0",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",

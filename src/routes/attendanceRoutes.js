@@ -1,9 +1,9 @@
 const express = require("express");
-const upload = require('../middlewares/upload');
+const { upload, uploadToGCS } = require('../middlewares/upload');
 const { authenticate } = require('../middlewares/auth');
 const { addAttendance } = require("../controllers/attendanceController");
 
 const router = express.Router();
-router.post("/attendance", authenticate, upload.single('photo'), addAttendance);
+router.post("/attendance", authenticate, upload.single('photo'), uploadToGCS, addAttendance);
 
 module.exports = router;
