@@ -1,0 +1,53 @@
+# Node.js dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime files
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Directory for uploaded files
+uploads/
+
+# Database files (local SQLite or others)
+*.sqlite3
+*.db
+*.sql
+
+# IDE/Editor specific files
+.vscode/
+.idea/
+*.swp
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Docker-specific files
+docker-compose.override.yml
+.env.local
+
+# Build output
+dist/
+build/
+
+# Testing files
+coverage/
+.nyc_output/
+
+# Git-specific files
+.git/
+
+# Ignore database configuration
+config/config.json
