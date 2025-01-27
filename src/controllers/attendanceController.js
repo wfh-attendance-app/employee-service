@@ -1,22 +1,40 @@
+const { Op } = require("sequelize"); // Import Sequelize operators for querying
 const Attendance = require('../models/attendanceModel');
 
 exports.getAtendanceStatus = async (req, res) => {
     try {
         const user_id = req.user.id;
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Normalize to start of the day
 
-        // Check if there's an active clock-in (clock_out is null)
-        const existingRecord = await Attendance.findOne({
-            where: { user_id, clock_out: null },
+        // Find today's attendance record
+        const todayRecord = await Attendance.findOne({
+            where: {
+                user_id,
+                clock_in: { [Op.gte]: today }, // Ensures only today's record is fetched
+            },
+            order: [["clock_in", "DESC"]],
         });
 
-        if (existingRecord) {
-            return res.status(200).json({ status: 'clocked_in', attendance: existingRecord });
+        if (!todayRecord) {
+            return res.status(200).json({ status: "not_recorded" });
         }
 
-        return res.status(200).json({ status: 'clocked_out' });
+        if (todayRecord.clock_out) {
+            return res.status(200).json({
+                status: "clocked_out",
+                clock_in_time: todayRecord.clock_in,
+                clock_out_time: todayRecord.clock_out,
+            });
+        }
+
+        return res.status(200).json({
+            status: "clocked_in",
+            clock_in_time: todayRecord.clock_in,
+        });
     } catch (err) {
-        console.error('Error fetching status:', err);
-        res.status(500).json({ error: 'Failed to fetch attendance status' });
+        console.error("Error fetching attendance status:", err);
+        res.status(500).json({ error: "Failed to fetch attendance status" });
     }
 };
 
