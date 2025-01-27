@@ -4,7 +4,7 @@ const path = require('path');
 
 // Initialize Google Cloud Storage
 const storage = new Storage({
-    keyFilename: path.join(__dirname, '../../alvin-cloud-95cbb836cbde.json'),
+    keyFilename: path.join(__dirname, process.env.GOOGLE_APPLICATION_CREDENTIALS),
 });
 const bucketName = 'alvin-uploads';
 const bucket = storage.bucket(bucketName);
